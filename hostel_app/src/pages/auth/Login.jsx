@@ -71,13 +71,17 @@ const Login = () => {
       // Simulate API call - replace with actual authentication logic
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
+      // Determine user role (demo logic): emails containing "admin" are admins
+      const role = formData.email.toLowerCase().includes("admin") ? "admin" : "customer";
+      localStorage.setItem("userType", role);
+
       // Store user data in localStorage (in real app, store JWT token)
       if (rememberMe) {
         localStorage.setItem("userEmail", formData.email);
       }
 
-      // Navigate to dashboard or home page after successful login
-      navigate("/rooms");
+      // Navigate based on role
+      navigate(role === "admin" ? "/bookings" : "/rooms");
     } catch (error) {
       console.error("Login error:", error);
       setErrors({ general: "Login failed. Please try again." });
