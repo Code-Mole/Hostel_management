@@ -1,0 +1,160 @@
+/* Rooms List Styles */
+.rooms-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.rooms-header h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+}
+
+.rooms-header p {
+  color: #7f8c8d;
+  margin-top: 6px;
+}
+
+.rooms-filters {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0 24px;
+  flex-wrap: wrap;
+}
+
+.rooms-filters input,
+.rooms-filters select {
+  padding: 10px 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  background: #f8f9fa;
+}
+
+.rooms-filters input:focus,
+.rooms-filters select:focus {
+  outline: none;
+  border-color: #3498db;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 16px;
+}
+
+.room-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.12);
+}
+
+.room-thumb {
+  position: relative;
+  height: 160px;
+  background: #f2f2f2;
+}
+
+.room-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #fff;
+}
+
+.badge.room {
+  background: #3498db;
+}
+
+.badge.house {
+  background: #9b59b6;
+}
+.badge.Appartment {
+  background: #dba826;
+}
+.badge.Estate {
+  background: #34dc1b;
+}
+
+.room-body {
+  padding: 14px 16px 0;
+}
+
+.room-body h3 {
+  font-size: 1rem;
+  color: #2c3e50;
+  margin-bottom: 6px;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.specs {
+  display: flex;
+  gap: 12px;
+  margin: 10px 0 6px;
+  color: #2c3e50;
+}
+
+.specs span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.room-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px 16px;
+}
+
+.view-btn {
+  padding: 8px 12px;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  background: #fff;
+  color: #2c3e50;
+  cursor: pointer;
+}
+
+.view-btn:hover {
+  border-color: #3498db;
+}
+
+@media (max-width: 480px) {
+  .rooms-page {
+    padding: 16px;
+  }
+}
