@@ -11,6 +11,13 @@ export default defineConfig({
     host: true,
     open: true,
     cors: true,
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
 
   // Build configuration
