@@ -14,9 +14,16 @@ import {
   FaChartLine,
 } from "react-icons/fa";
 import "./Homepage.css";
+import emailjs from "emailjs-com";
 
 const Homepage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,6 +35,30 @@ const Homepage = () => {
       element.scrollIntoView({ behavior: "smooth" });
     }
     setIsMenuOpen(false);
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .send(
+        "service_01d7yej",
+        "template_73id0t6",
+        formData,
+        "RvF0bLUJvPWuQ68A1"
+      )
+      .then(
+        (result) => {
+          alert("Message sent successfully!");
+        },
+        (error) => {
+          alert("Failed to send message.");
+        }
+      );
   };
 
   return (
@@ -89,9 +120,6 @@ const Homepage = () => {
             needs,rent or purchasing...
           </p>
           <div className="hero-buttons">
-            {/* <button className="btn btn-primary">
-              <Link to="/rooms">Explore Properties</Link>
-            </button> */}
             <Link to="/login" className="btn btn-secondary">
               Get Started
             </Link>
@@ -223,15 +251,29 @@ const Homepage = () => {
 
             <div className="contact-form">
               <h3>Send us a Message</h3>
-              <form>
+              <form onSubmit={sendEmail}>
                 <div className="form-group">
-                  <input type="text" placeholder="Your Name" required />
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
                 <div className="form-group">
-                  <input type="email" placeholder="Your Email" required />
+                  <input
+                    type="email"
+                    placeholder="Your Email"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
                 <div className="form-group">
-                  <input type="tel" placeholder="Your Phone" />
+                  <input
+                    type="tel"
+                    placeholder="Your Phone"
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="form-group">
                   <textarea

@@ -235,7 +235,7 @@ export const rooms = [
       "Parking",
     ],
     images: [
-      "/images/Hostel2.jpg",
+      "/images/hostel20.jpg",
       "/images/Hostel7.jpg",
       "/images/Hostel8.jpg",
     ],
@@ -269,7 +269,7 @@ export const rooms = [
       "Common Kitchen",
     ],
     images: [
-      "/images/Hostel1.jpg",
+      "/images/hostel21.jpg",
       "/images/Hostel5.jpg",
       "/images/Hostel9.jpg",
     ],
@@ -308,7 +308,7 @@ export const rooms = [
       "Swimming Pool",
     ],
     images: [
-      "/images/Hostel12.jpg",
+      "/images/hostel22.jpg",
       "/images/Hostel6.jpg",
       "/images/Hostel14.jpg",
     ],
