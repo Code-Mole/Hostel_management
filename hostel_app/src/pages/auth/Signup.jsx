@@ -11,7 +11,6 @@ import {
   FaBuilding,
   FaSignInAlt,
   FaCalendar,
-  FaMapMarkerAlt,
   FaUserTie,
 } from "react-icons/fa";
 import "./Signup.css";
@@ -32,30 +31,6 @@ const Signup = () => {
     occupation: "",
     company: "",
     studentId: "",
-    // Address information
-    address: {
-      street: "",
-      city: "",
-      state: "",
-      country: "",
-      postalCode: "",
-    },
-    // Emergency contact
-    emergencyContact: {
-      name: "",
-      relationship: "",
-      phone: "",
-      email: "",
-    },
-    // Enhanced booking preferences
-    bookingPreferences: {
-      preferredBlock: "",
-      preferredRoomType: "single",
-      preferredFloor: "",
-      budgetRange: "medium",
-      specialRequirements: [],
-      preferredCheckInTime: "afternoon",
-    },
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +38,7 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 3;
+  const totalSteps = 2;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -82,36 +57,6 @@ const Signup = () => {
     }
 
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
-  };
-
-  const handleArrayChange = (field, value, action = "add") => {
-    if (
-      action === "add" &&
-      value &&
-      !formData.bookingPreferences.specialRequirements.includes(value)
-    ) {
-      setFormData((prev) => ({
-        ...prev,
-        bookingPreferences: {
-          ...prev.bookingPreferences,
-          specialRequirements: [
-            ...prev.bookingPreferences.specialRequirements,
-            value,
-          ],
-        },
-      }));
-    } else if (action === "remove") {
-      setFormData((prev) => ({
-        ...prev,
-        bookingPreferences: {
-          ...prev.bookingPreferences,
-          specialRequirements:
-            prev.bookingPreferences.specialRequirements.filter(
-              (item) => item !== value
-            ),
-        },
-      }));
-    }
   };
 
   const validateStep = (step) => {
@@ -203,9 +148,6 @@ const Signup = () => {
         occupation: formData.occupation.trim(),
         company: formData.company.trim(),
         studentId: formData.studentId.trim(),
-        address: formData.address,
-        emergencyContact: formData.emergencyContact,
-        bookingPreferences: formData.bookingPreferences,
       };
 
       const res = await axios.post("/api/auth/signup", payload);
@@ -443,133 +385,13 @@ const Signup = () => {
     </>
   );
 
-  const renderStep3 = () => (
-    <>
-      <h2>Booking Preferences</h2>
-      <p>Help us find the perfect estate for you</p>
-
-      <div className="grid-2">
-        <div className="form-group">
-          <label htmlFor="preferredBlock">Preferred Block</label>
-          <input
-            id="preferredBlock"
-            name="bookingPreferences.preferredBlock"
-            type="text"
-            placeholder="e.g. A, B, C"
-            value={formData.bookingPreferences.preferredBlock}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="preferredRoomType">Preferred Room Type</label>
-          <select
-            id="preferredRoomType"
-            name="bookingPreferences.preferredRoomType"
-            value={formData.bookingPreferences.preferredRoomType}
-            onChange={handleInputChange}
-          >
-            <option value="single">Single</option>
-            <option value="double">Double</option>
-            <option value="triple">Triple</option>
-            <option value="suite">Suite</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="grid-2">
-        <div className="form-group">
-          <label htmlFor="preferredFloor">Preferred Floor</label>
-          <input
-            id="preferredFloor"
-            name="bookingPreferences.preferredFloor"
-            type="number"
-            min="1"
-            max="50"
-            placeholder="e.g. 3"
-            value={formData.bookingPreferences.preferredFloor}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="budgetRange">Budget Range</label>
-          <select
-            id="budgetRange"
-            name="bookingPreferences.budgetRange"
-            value={formData.bookingPreferences.budgetRange}
-            onChange={handleInputChange}
-          >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-            <option value="luxury">Luxury</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="preferredCheckInTime">Preferred Check-in Time</label>
-        <select
-          id="preferredCheckInTime"
-          name="bookingPreferences.preferredCheckInTime"
-          value={formData.bookingPreferences.preferredCheckInTime}
-          onChange={handleInputChange}
-        >
-          <option value="morning">Morning (8 AM - 12 PM)</option>
-          <option value="afternoon">Afternoon (12 PM - 4 PM)</option>
-          <option value="evening">Evening (4 PM - 8 PM)</option>
-        </select>
-      </div>
-
-      <div className="form-group">
-        <label>Special Requirements (optional)</label>
-        <div className="special-requirements">
-          <input
-            type="text"
-            placeholder="e.g., wheelchair-accessible, quiet-area"
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                handleArrayChange("specialRequirements", e.target.value, "add");
-                e.target.value = "";
-              }
-            }}
-          />
-          <small>Press Enter to add requirements</small>
-        </div>
-        {formData.bookingPreferences.specialRequirements.length > 0 && (
-          <div className="requirements-tags">
-            {formData.bookingPreferences.specialRequirements.map(
-              (req, index) => (
-                <span key={index} className="requirement-tag">
-                  {req}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      handleArrayChange("specialRequirements", req, "remove")
-                    }
-                    className="remove-tag"
-                  >
-                    ×
-                  </button>
-                </span>
-              )
-            )}
-          </div>
-        )}
-      </div>
-    </>
-  );
-
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
         return renderStep1();
       case 2:
         return renderStep2();
-      case 3:
-        return renderStep3();
+
       default:
         return renderStep1();
     }
@@ -596,10 +418,6 @@ const Signup = () => {
           <div className={currentStep >= 2 ? "active" : ""}>
             <span className="step-number">2</span>
             <span className="step-label">Personal</span>
-          </div>
-          <div className={currentStep >= 3 ? "active" : ""}>
-            <span className="step-number">3</span>
-            <span className="step-label">Preferences</span>
           </div>
         </div>
 

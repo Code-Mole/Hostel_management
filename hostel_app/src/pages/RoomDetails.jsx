@@ -157,7 +157,7 @@ const RoomDetails = () => {
         : "a";
 
       alert(
-        `🎉 Congratulations! You have successfully booked ${article} ${accommodationType} at ${room.title}.\n\nYour booking details:\n• Check-in: ${bookingData.checkInDate}\n• Check-out: ${bookingData.checkOutDate}\n• Guests: ${bookingData.numberOfGuests}\n• Total Amount: ${newBooking.totalAmount}\n• Booking ID: ${newBooking.id}\n\nWe will contact you at ${bookingData.email} to confirm your booking.`
+        `Congratulations! You have successfully booked ${article} ${accommodationType} at ${room.title}.\n\nYour booking details:\n• Check-in: ${bookingData.checkInDate}\n• Check-out: ${bookingData.checkOutDate}\n• Guests: ${bookingData.numberOfGuests}\n• Total Amount: ${newBooking.totalAmount}\n• Booking ID: ${newBooking.id}\n\nWe will contact you at ${bookingData.email} to confirm your booking.`
       );
 
       // Close modal and reset form

@@ -89,9 +89,9 @@ const Homepage = () => {
             needs,rent or purchasing...
           </p>
           <div className="hero-buttons">
-            <button className="btn btn-primary">
+            {/* <button className="btn btn-primary">
               <Link to="/rooms">Explore Properties</Link>
-            </button>
+            </button> */}
             <Link to="/login" className="btn btn-secondary">
               Get Started
             </Link>

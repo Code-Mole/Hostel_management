@@ -48,8 +48,10 @@ function Rooms() {
         />
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="all">All Types</option>
-          <option value="room">Rooms</option>
-          <option value="house">Houses</option>
+          <option value="Room">Rooms</option>
+          <option value="House">Houses</option>
+          <option value="Hostel">Hostel</option>
+          <option value="Hotel">Hotel</option>
           <option value="Estate">Estate</option>
           <option value="Appartment">Appartment</option>
         </select>
@@ -91,9 +93,11 @@ function Rooms() {
               </div>
             </div>
             <div className="room-footer">
-              <strong>${room.pricePerMonth}/mo</strong>
-              <button className="view-btn">View details</button>
+              <p>
+                Price : <strong>${room.pricePerMonth}/month</strong>
+              </p>
             </div>
+            <button className="view-btn">View details</button>
           </Link>
         ))}
       </section>

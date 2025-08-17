@@ -8,6 +8,14 @@ import Login from "./pages/auth/Login";
 import RoomDetails from "./pages/RoomDetails";
 
 function App() {
+  const AdminRoute = ({ children }) => {
+    const userType = localStorage.getItem("userType");
+    if (userType !== "admin") {
+      return <Navigate to="/rooms" replace />;
+    }
+    return children;
+  };
+
   return (
     <Router>
       {/* Main Content Area */}
@@ -16,7 +24,15 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/rooms/:id" element={<RoomDetails />} />
-          <Route path="/bookings" element={<Bookings />} />
+
+          <Route
+            path="/bookings"
+            element={
+              <AdminRoute>
+                <Bookings />
+              </AdminRoute>
+            }
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
         </Routes>

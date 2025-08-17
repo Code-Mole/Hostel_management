@@ -154,215 +154,29 @@ const signup = async (req, res) => {
   }
 };
 
-// Get all users (admin only)
-const getAllUsers = async (req, res) => {
+// login user
+ const login = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    // Check if requesting user is admin
-    if (!req.user || !req.user.isAdmin()) {
-      return res.status(403).json({
-        message: "Access denied. Admin privileges required.",
-      });
-    }
-
-    const users = await User.find({}).select("-password");
-
-    return res.status(200).json({
-      message: "Users retrieved successfully",
-      users,
-      total: users.length,
-    });
-  } catch (err) {
-    console.error("Get all users error:", err);
-    return res.status(500).json({
-      message: "Internal server error. Please try again later.",
-    });
-  }
-};
-
-// Get users by type
-const getUsersByType = async (req, res) => {
-  try {
-    const { userType } = req.params;
-
-    // Check if requesting user is admin
-    if (!req.user || !req.user.isAdmin()) {
-      return res.status(403).json({
-        message: "Access denied. Admin privileges required.",
-      });
-    }
-
-    // Validate user type
-    if (!["customer", "admin"].includes(userType)) {
-      return res.status(400).json({
-        message: "Invalid user type. Must be 'customer' or 'admin'",
-      });
-    }
-
-    const users = await User.findByType(userType).select("-password");
-
-    return res.status(200).json({
-      message: `${
-        userType.charAt(0).toUpperCase() + userType.slice(1)
-      }s retrieved successfully`,
-      users,
-      total: users.length,
-    });
-  } catch (err) {
-    console.error("Get users by type error:", err);
-    return res.status(500).json({
-      message: "Internal server error. Please try again later.",
-    });
-  }
-};
-
-// Update user type (admin only)
-const updateUserType = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const { userType, adminPermissions } = req.body;
-
-    // Check if requesting user is admin
-    if (!req.user || !req.user.isAdmin()) {
-      return res.status(403).json({
-        message: "Access denied. Admin privileges required.",
-      });
-    }
-
-    // Validate user type
-    if (!["customer", "admin"].includes(userType)) {
-      return res.status(400).json({
-        message: "Invalid user type. Must be 'customer' or 'admin'",
-      });
-    }
-
-    const updateData = { userType };
-
-    // Add admin permissions if changing to admin
-    if (userType === "admin" && adminPermissions) {
-      updateData.adminPermissions = adminPermissions;
-    }
-
-    // Remove admin permissions if changing to customer
-    if (userType === "customer") {
-      updateData.adminPermissions = {
-        canManageUsers: false,
-        canManageBookings: false,
-        canManageRooms: false,
-        canViewReports: false,
-        canManageSettings: false,
-      };
-    }
-
-    const user = await User.findByIdAndUpdate(userId, updateData, {
-      new: true,
-      runValidators: true,
-    }).select("-password");
+    const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    return res.status(200).json({
-      message: "User type updated successfully",
-      user,
-    });
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
+
+    res.status(200).json({ message: "Login successful" });
+
   } catch (err) {
-    console.error("Update user type error:", err);
-    return res.status(500).json({
-      message: "Internal server error. Please try again later.",
-    });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
-};
+  
+ }
 
-// Get user profile
-const getUserProfile = async (req, res) => {
-  try {
-    const { userId } = req.params;
-
-    // Users can only view their own profile, or admins can view any profile
-    if (
-      !req.user ||
-      (req.user._id.toString() !== userId && !req.user.isAdmin())
-    ) {
-      return res.status(403).json({
-        message: "Access denied. You can only view your own profile.",
-      });
-    }
-
-    const user = await User.findById(userId).select("-password");
-
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
-    }
-
-    return res.status(200).json({
-      message: "User profile retrieved successfully",
-      user,
-    });
-  } catch (err) {
-    console.error("Get user profile error:", err);
-    return res.status(500).json({
-      message: "Internal server error. Please try again later.",
-    });
-  }
-};
-
-// Update user profile
-const updateUserProfile = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const updateData = req.body;
-
-    // Users can only update their own profile, or admins can update any profile
-    if (
-      !req.user ||
-      (req.user._id.toString() !== userId && !req.user.isAdmin())
-    ) {
-      return res.status(403).json({
-        message: "Access denied. You can only update your own profile.",
-      });
-    }
-
-    // Remove sensitive fields that shouldn't be updated directly
-    delete updateData.password;
-    delete updateData.userType;
-    delete updateData.adminPermissions;
-    delete updateData.isVerified;
-    delete updateData.isActive;
-    delete updateData.isBlocked;
-
-    const user = await User.findByIdAndUpdate(userId, updateData, {
-      new: true,
-      runValidators: true,
-    }).select("-password");
-
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
-    }
-
-    return res.status(200).json({
-      message: "User profile updated successfully",
-      user,
-    });
-  } catch (err) {
-    console.error("Update user profile error:", err);
-    return res.status(500).json({
-      message: "Internal server error. Please try again later.",
-    });
-  }
-};
-
-export {
-  signup,
-  getAllUsers,
-  getUsersByType,
-  updateUserType,
-  getUserProfile,
-  updateUserProfile,
-};
+export { signup,login };

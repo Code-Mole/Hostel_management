@@ -83,18 +83,24 @@
   color: #fff;
 }
 
-.badge.room {
+.badge.Room {
   background: #3498db;
 }
 
-.badge.house {
+.badge.House {
   background: #9b59b6;
+}
+.badge.Hotel {
+  background: #e70316;
+}
+.badge.Hostel {
+  background: #e41799;
 }
 .badge.Appartment {
   background: #dba826;
 }
 .badge.Estate {
-  background: #34dc1b;
+  background: #1fd403;
 }
 
 .room-body {
@@ -141,6 +147,8 @@
 }
 
 .view-btn {
+  width: 80%;
+  margin: 0 auto 20px;
   padding: 8px 12px;
   border: 1px solid #e9ecef;
   border-radius: 10px;
