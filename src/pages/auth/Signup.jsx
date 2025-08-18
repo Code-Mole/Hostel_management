@@ -150,7 +150,10 @@ const Signup = () => {
         studentId: formData.studentId.trim(),
       };
 
-      const res = await axios.post("/api/auth/signup", payload);
+      const res = await axios.post(
+        "https://estate-app-server.onrender.com/api/auth/signup",
+        payload
+      );
 
       if (res.status === 201) {
         sessionStorage.setItem("signedUpEmail", payload.email);
