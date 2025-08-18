@@ -13,7 +13,7 @@ export default defineConfig({
     cors: true,
     proxy: {
       "/api": {
-        target: "http://localhost:8000",
+        target: "https://estate-app-server.onrender.com",
         changeOrigin: true,
         secure: false,
       },
