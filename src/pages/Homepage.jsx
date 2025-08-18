@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   FaHome,
@@ -41,22 +41,21 @@ const Homepage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const form = useRef();
+
   const sendEmail = (e) => {
     e.preventDefault();
 
     emailjs
-      .send(
-        "service_01d7yej",
-        "template_73id0t6",
-        formData,
-        "RvF0bLUJvPWuQ68A1"
-      )
+      .sendForm("service_01d7yej", "template_73id0t6", form.current, {
+        publicKey: "26Xt2OlKBgffulABS",
+      })
       .then(
-        (result) => {
-          alert("Message sent successfully!");
+        () => {
+          console.log("SUCCESS!");
         },
         (error) => {
-          alert("Failed to send message.");
+          console.log("FAILED...", error.text);
         }
       );
   };
@@ -251,10 +250,11 @@ const Homepage = () => {
 
             <div className="contact-form">
               <h3>Send us a Message</h3>
-              <form onSubmit={sendEmail}>
+              <form ref={form} onSubmit={sendEmail}>
                 <div className="form-group">
                   <input
                     type="text"
+                    name="user_name"
                     placeholder="Your Name"
                     onChange={handleChange}
                     required
@@ -263,6 +263,7 @@ const Homepage = () => {
                 <div className="form-group">
                   <input
                     type="email"
+                    name="user_email"
                     placeholder="Your Email"
                     onChange={handleChange}
                     required
@@ -271,18 +272,20 @@ const Homepage = () => {
                 <div className="form-group">
                   <input
                     type="tel"
+                    name="user_phone"
                     placeholder="Your Phone"
                     onChange={handleChange}
                   />
                 </div>
                 <div className="form-group">
                   <textarea
+                    name="message"
                     placeholder="Your Message"
                     rows="5"
                     required
                   ></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" value="Send" className="btn btn-primary">
                   Send Message
                 </button>
               </form>

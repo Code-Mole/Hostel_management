@@ -89,6 +89,7 @@
 
 /* Hero Section */
 .hero-section {
+  width: 100%;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -470,7 +471,7 @@
     margin-top: 30px;
   }
   .image-placeholder{
-    width: 400px;
+    width: 300px;
   }
   .nav-menu {
     position: fixed;
@@ -486,7 +487,7 @@
   }
 
   .about-stats{
-    width: 450px;
+    width: 350px;
   }
 
   .nav-menu.active {
