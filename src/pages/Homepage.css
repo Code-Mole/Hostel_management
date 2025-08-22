@@ -175,7 +175,7 @@
 .image-placeholder {
   width: 500px;
   height: 450px;
-  background-image: url("../../public/images/Hostel2.jpg");
+  background-image: url("../../src/assets/estate.jpeg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -464,13 +464,13 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .hero-section{
+  .hero-section {
     flex-direction: column;
   }
-  .hero-image{
+  .hero-image {
     margin-top: 30px;
   }
-  .image-placeholder{
+  .image-placeholder {
     width: 300px;
   }
   .nav-menu {
@@ -486,7 +486,7 @@
     padding: 20px 0;
   }
 
-  .about-stats{
+  .about-stats {
     width: 350px;
   }
 
@@ -525,7 +525,7 @@
   .about-stats {
     flex-direction: column;
   }
-   .stat-item {
+  .stat-item {
     width: 80%;
   }
 
