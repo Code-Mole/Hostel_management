@@ -94,7 +94,7 @@ function Rooms() {
             </div>
             <div className="room-footer">
               <p>
-                Price : <strong>${room.pricePerMonth}/month</strong>
+                Price : <strong>GHC{room.pricePerMonth}/month</strong>
               </p>
             </div>
             <button className="view-btn">View details</button>
