@@ -113,7 +113,7 @@ const Homepage = () => {
           </h1>
           <p className="hero-subtitle">
             Hello and welcome,we are thrilled to have you here discover your
-            dream home around the University and Natural Resources
+            dream home around the University of Energy and Natural Resources
             (UENR),whether you are a student,a worker, family,your search ends
             here! We will help you find the perfect property that fits your
             needs,rent or purchasing...
