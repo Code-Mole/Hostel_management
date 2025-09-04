@@ -107,7 +107,7 @@ export const rooms = [
     title: "EUSBETT HOTEL",
     type: "Hotel",
     pricePerMonth: 228,
-    priceDisplay: "$76 (standard) - $130 (deluxe) per night",
+    priceDisplay: "Ghc76 (standard) - Ghc130 (deluxe) per night",
     bedrooms: 1,
     bathrooms: 1,
     sizeSqft: 220,
